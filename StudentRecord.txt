@@ -1,0 +1,164 @@
+Last login: Wed Nov 18 18:19:38 on ttys000
+devangsaini@Devangs-MacBook-Air ~ % mongosh "mongodb+srv://cluster0.zr60ofx.mongodb.net/" --apiVersion 1 --username devangsaini46_db_user
+Enter password: *******
+Current Mongosh Log ID:	6b03b0b08ee5510510320060
+Connecting to:		mongodb+srv://<credentials>@cluster0.zr60ofx.mongodb.net/?appName=mongosh+2.14.0
+Using MongoDB:		8.0.39 (API Version 1)
+Using Mongosh:		2.14.0
+mongosh 2.14.3 is available, run brew upgrade mongosh to update
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+Atlas atlas-b8uoln-shard-0 [primary] test> use collegeDB
+switched to db collegeDB
+Atlas atlas-b8uoln-shard-0 [primary] collegeDB> db.dropDatabase()
+MongoServerError[AtlasError]: user is not allowed to do action [dropDatabase] on [collegeDB.]
+Atlas atlas-b8uoln-shard-0 [primary] collegeDB> use college
+switched to db college
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.insertOne({
+|     rollNo: 101,
+|     name: "Arun",
+|     dept: "CSE",
+|     marks: 78,
+|     city: "Chennai"
+| })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6b03b582c4f37ee375eea425')
+}
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.insertMany([
+|     {
+|         rollNo: 102,
+|         name: "Priya",
+|         dept: "IT",
+|         marks: 85,
+|         city: "Jaipur"
+|     },
+|     {
+|         rollNo: 103,
+|         name: "Karthik",
+|         dept: "CSE",
+|         marks: 62,
+|         city: "Chennai"
+|     },
+|     {
+|         rollNo: 104,
+|         name: "Rahul",
+|         dept: "ECE",
+|         marks: 75,
+|         city: "Delhi"
+|     },
+|     {
+|         rollNo: 105,
+|         name: "Suresh",
+|         dept: "CSE",
+|         marks: 91,
+|         city: "Trichy"
+|     }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6b03b598c4f37ee375eea426'),
+    '1': ObjectId('6b03b598c4f37ee375eea427'),
+    '2': ObjectId('6b03b598c4f37ee375eea428'),
+    '3': ObjectId('6b03b598c4f37ee375eea429')
+  }
+}
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.find()
+[
+  {
+    _id: ObjectId('6b03b582c4f37ee375eea425'),
+    rollNo: 101,
+    name: 'Arun',
+    dept: 'CSE',
+    marks: 78,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03b598c4f37ee375eea426'),
+    rollNo: 102,
+    name: 'Priya',
+    dept: 'IT',
+    marks: 85,
+    city: 'Jaipur'
+  },
+  {
+    _id: ObjectId('6b03b598c4f37ee375eea427'),
+    rollNo: 103,
+    name: 'Karthik',
+    dept: 'CSE',
+    marks: 62,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03b598c4f37ee375eea428'),
+    rollNo: 104,
+    name: 'Rahul',
+    dept: 'ECE',
+    marks: 75,
+    city: 'Delhi'
+  },
+  {
+    _id: ObjectId('6b03b598c4f37ee375eea429'),
+    rollNo: 105,
+    name: 'Suresh',
+    dept: 'CSE',
+    marks: 91,
+    city: 'Trichy'
+  }
+]
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.find({ dept: "CSE" })
+[
+  {
+    _id: ObjectId('6b03b582c4f37ee375eea425'),
+    rollNo: 101,
+    name: 'Arun',
+    dept: 'CSE',
+    marks: 78,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03b598c4f37ee375eea427'),
+    rollNo: 103,
+    name: 'Karthik',
+    dept: 'CSE',
+    marks: 62,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03b598c4f37ee375eea429'),
+    rollNo: 105,
+    name: 'Suresh',
+    dept: 'CSE',
+    marks: 91,
+    city: 'Trichy'
+  }
+]
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.updateOne(
+|     { rollNo: 103 },
+|     { $set: { marks: 68 } }
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.updateMany(
+|     { dept: "CSE" },
+|     { $set: { semester: 3 } }
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.deleteOne({ rollNo: 104 })
+{ acknowledged: true, deletedCount: 1 }
+Atlas atlas-b8uoln-shard-0 [primary] college> db.students.countDocuments({})
+4
+Atlas atlas-b8uoln-shard-0 [primary] college> 
